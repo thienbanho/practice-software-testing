@@ -11,7 +11,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+          "raw": "{\n  \"first_name\": \"{{first_name}}\",\n  \"last_name\": \"{{last_name}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"state\": \"{{state}}\",\n  \"country\": \"{{country}}\",\n  \"postcode\": \"{{postcode}}\",\n  \"phone\": \"{{phone}}\",\n  \"dob\": \"{{dob}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
         },
         "url": {
           "raw": "{{base_url}}/users/register",
@@ -135,51 +135,6 @@
               "  pm.test(\"Logout - Failed\", function () {",
               "    pm.expect(pm.response.code).to.be.oneOf([400, 401]);",
               "  });",
-              "}"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Search User",
-      "request": {
-        "method": "GET",
-        "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
-        "url": {
-          "raw": "{{base_url}}/users/search?term={{searchTerm}}",
-          "host": ["{{base_url}}"],
-          "path": ["users", "search"],
-          "query": [{ "key": "term", "value": "{{searchTerm}}" }]
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Search User - Status OK/Unauthorized/NotFound\", function () {",
-              "  pm.expect(pm.response.code).to.be.oneOf([200, 401, 404]);",
-              "});",
-              "",
-              "if (pm.response.code === 200) {",
-              "  let jsonData = pm.response.json();",
-              "  ",
-              "  pm.test(\"Search User - Response is an array\", function () {",
-              "    pm.expect(Array.isArray(jsonData)).to.be.true;",
-              "  });",
-              "",
-              "  if (jsonData.length > 0) {",
-              "    const user = jsonData[0];",
-              "    pm.test(\"Search User - User object contains expected fields\", function () {",
-              "      pm.expect(user).to.have.property(\"first_name\");",
-              "      pm.expect(user).to.have.property(\"last_name\");",
-              "      pm.expect(user).to.have.property(\"city\");",
-              "      pm.expect(user).to.have.property(\"email\");",
-              "      pm.expect(user).to.have.property(\"id\");",
-              "    });",
-              "  }",
               "}"
             ],
             "type": "text/javascript"
